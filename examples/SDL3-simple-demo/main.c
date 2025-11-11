@@ -9,7 +9,9 @@
 
 #include <stdio.h>
 
-#include "../../renderers/SDL3/clay_renderer_SDL3.c"
+#define SDL3_CLAY_IMPL
+#include "../../renderers/SDL3/clay_renderer_SDL3.h"
+
 #include "../shared-layouts/clay-video-demo.c"
 
 static const Uint32 FONT_ID = 0;
