@@ -1,3 +1,6 @@
+#ifndef SDL3_CLAY_INCLUDED
+#define SDL3_CLAY_INCLUDED (1)
+
 #include "../../clay.h"
 #include <SDL3/SDL.h>
 #include <SDL3_ttf/SDL_ttf.h>
@@ -7,6 +10,13 @@ typedef struct {
     TTF_TextEngine *textEngine;
     TTF_Font **fonts;
 } Clay_SDL3RendererData;
+
+static void SDL_Clay_RenderClayCommands(Clay_SDL3RendererData *rendererData, Clay_RenderCommandArray *rcommands);
+
+#endif /* SDL3_CLAY_INCLUDED */
+
+#ifdef SDL3_CLAY_IMPL
+#define SDL3_CLAY_IMPL_INCLUDED (1)
 
 /* Global for convenience. Even in 4K this is enough for smooth curves (low radius or rect size coupled with
  * no AA or low resolution might make it appear as jagged curves) */
@@ -260,3 +270,5 @@ static void SDL_Clay_RenderClayCommands(Clay_SDL3RendererData *rendererData, Cla
         }
     }
 }
+
+#endif /* SDL3_CLAY_IMPL */
