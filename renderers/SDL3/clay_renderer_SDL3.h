@@ -4,15 +4,13 @@
 #include "../../clay.h"
 #include <SDL3/SDL.h>
 
-#ifdef SDL3_CLAY_SDL_TTF
+#ifndef SDL3_CLAY_NO_SDL_TTF
 #include <SDL3_ttf/SDL_ttf.h>
-#else
-#error Please specify SDL3_CLAY_SDL_TTF
 #endif
 
 typedef struct {
     SDL_Renderer *renderer;
-#ifdef SDL3_CLAY_SDL_TTF
+#ifndef SDL3_CLAY_NO_SDL_TTF
     TTF_TextEngine *textEngine;
     TTF_Font **fonts;
 #endif
@@ -195,8 +193,8 @@ void SDL_Clay_RenderClayCommands(Clay_SDL3RendererData *rendererData, Clay_Rende
                 }
             } break;
             case CLAY_RENDER_COMMAND_TYPE_TEXT: {
+#ifndef SDL3_CLAY_NO_SDL_TTF
                 Clay_TextRenderData *config = &rcmd->renderData.text;
-#ifdef SDL3_CLAY_SDL_TTF
                 TTF_Font *font = rendererData->fonts[config->fontId];
                 TTF_SetFontSize(font, config->fontSize);
                 TTF_Text *text = TTF_CreateText(rendererData->textEngine, font, config->stringContents.chars, config->stringContents.length);
