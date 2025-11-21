@@ -10,6 +10,7 @@
 #include <stdio.h>
 
 #define SDL3_CLAY_IMPL
+#define SDL3_CLAY_SDL_TTF
 #include "../../renderers/SDL3/clay_renderer_SDL3.h"
 
 #include "../shared-layouts/clay-video-demo.c"

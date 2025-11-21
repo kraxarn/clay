@@ -3,12 +3,19 @@
 
 #include "../../clay.h"
 #include <SDL3/SDL.h>
+
+#ifdef SDL3_CLAY_SDL_TTF
 #include <SDL3_ttf/SDL_ttf.h>
+#else
+#error Please specify SDL3_CLAY_SDL_TTF
+#endif
 
 typedef struct {
     SDL_Renderer *renderer;
+#ifdef SDL3_CLAY_SDL_TTF
     TTF_TextEngine *textEngine;
     TTF_Font **fonts;
+#endif
 } Clay_SDL3RendererData;
 
 void SDL_Clay_RenderClayCommands(Clay_SDL3RendererData *rendererData, Clay_RenderCommandArray *rcommands);
@@ -189,12 +196,14 @@ void SDL_Clay_RenderClayCommands(Clay_SDL3RendererData *rendererData, Clay_Rende
             } break;
             case CLAY_RENDER_COMMAND_TYPE_TEXT: {
                 Clay_TextRenderData *config = &rcmd->renderData.text;
+#ifdef SDL3_CLAY_SDL_TTF
                 TTF_Font *font = rendererData->fonts[config->fontId];
                 TTF_SetFontSize(font, config->fontSize);
                 TTF_Text *text = TTF_CreateText(rendererData->textEngine, font, config->stringContents.chars, config->stringContents.length);
                 TTF_SetTextColor(text, config->textColor.r, config->textColor.g, config->textColor.b, config->textColor.a);
                 TTF_DrawRendererText(text, rect.x, rect.y);
                 TTF_DestroyText(text);
+#endif
             } break;
             case CLAY_RENDER_COMMAND_TYPE_BORDER: {
                 Clay_BorderRenderData *config = &rcmd->renderData.border;
